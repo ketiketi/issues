@@ -1,0 +1,50 @@
+.create-form {
+    width: 400px;
+}
+
+.item-table {
+    width: 100%;
+}
+
+.item-compact {
+    width: 1%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.item-table th {
+    text-align: left;
+    padding: 0px 7px 10px;
+}
+
+.item-table th.item-compact {
+    text-align: center;
+}
+
+.item-table td {
+    padding: 6px;
+}
+
+.item-row:not(:last-of-type) td {
+    border-bottom: 1px solid #EBF0F4;
+    position: relative;
+}
+
+.item-row:not(:last-of-type) td:first-of-type:before,
+.item-row:not(:last-of-type) td:last-of-type:after {
+    content: ' ';
+    position: absolute;
+    bottom: -1px;
+    width: 25px;
+    height: 1px;
+}
+
+.item-row:not(:last-of-type) td:first-of-type:before {
+    left: -25px;
+    background: linear-gradient(270deg, #EBF0F4 0%, #FFFFFF 100%);
+}
+
+.item-row:not(:last-of-type) td:last-of-type:after {
+    right: -25px;
+    background: linear-gradient(90deg, #EBF0F4 0%, #FFFFFF 100%);
+}

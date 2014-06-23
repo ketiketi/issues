@@ -1,10 +1,12 @@
-var Controller = require('locomotive').Controller;
+var Controller     = require('locomotive').Controller,
+    ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
 
 var controller = new Controller();
 
+controller.before('*', ensureLoggedIn('/login'));
+
 controller.index = function() {
-  this.title = 'Locomotive';
-  this.render();
-}
+    this.redirect('/projects');
+};
 
 module.exports = controller;

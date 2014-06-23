@@ -1,0 +1,50 @@
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    border: none;
+    border-bottom: 1px solid #EBF0F4;
+    background: transparent;
+    color: #333;
+    font-size: 16px;
+    margin: 0 0 12px 0;
+    padding: 5px 0;
+    outline: none;
+}
+
+label {
+    font-weight: bold;
+}
+.button {
+    margin: 7px 0px;
+    border: 0px;
+    padding: 10px 20px;
+    font-family: Lato, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    background-color: #43A5A4;
+    color: #FFF;
+    cursor: pointer;
+    width: auto;
+    outline: none;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.button-green {
+    background-color: #5CB85C;
+}
+
+.button-red {
+    background-color: #D9534F;
+}
+
+.button-block {
+    display: block;
+    width: 100%;
+}

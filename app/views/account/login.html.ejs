@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Login to Issues</title>
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|Oleo+Script' rel='stylesheet' type='text/css'>
+
+        <link href='/stylesheets/normalize.css' rel='stylesheet' type='text/css' />
+        <link href='/stylesheets/screen.css'    rel='stylesheet' type='text/css' />
+        <link href='/stylesheets/controls.css'  rel='stylesheet' type='text/css' />
+        <link href='/stylesheets/login.css'     rel='stylesheet' type='text/css' />
+    </head>
+
+    <body>
+        <section class='login'>
+            <a class='login-logo' href='/login'>Issues</a>
+
+            <form class='login-form' action='/login' method='post'>
+                <div>
+                    <label for='username'>Username:</label>
+                    <input placeholder='login used in system' name='username' type='text' autocomplete='off'>
+                </div>
+
+                <div>
+                    <label for='password'>Password:</label>
+                    <input placeholder='type it here' name='password' type='password' autocomplete='off'>
+                </div>
+
+                <input class='button pull-left' value='Log In' type='submit'>
+
+                <% if (message !== '') { %>
+                    <div class='login-message pull-left'><%= message %></div>
+                <% } %>
+            </form>
+        </section>
+
+    </body>
+</html>

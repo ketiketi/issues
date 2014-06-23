@@ -1,8 +1,17 @@
+html, body {
+    height: 100%;
+}
+
 body {
-    padding: 50px;
-    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans";
+    color: #333333;
 }
 
 a {
-    color: #00B7FF;
+    color: #43A5A4;
+    text-decoration: none;
+}
+
+.pull-left {
+    float: left;
 }
