@@ -15,3 +15,7 @@ a {
 .pull-left {
     float: left;
 }
+
+.accent {
+    color: #43A5A4;
+}

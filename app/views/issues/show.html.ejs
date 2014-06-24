@@ -8,36 +8,68 @@
 </div>
 
 <form action='/projects/<%= project.name %>/issues/<%= issue.ordinal %>' method='post'>
-    #<%= issue.ordinal %>: <%- text_field_tag('title', issue.title, { placeholder: 'Title' }) %>
-    <%- text_tag('text', issue.text, { placeholder: 'Description' }) %>
-    <br>
-    <%- select_tag('progress', [{ value: 'Open' , text: 'Open' },
-                                 { value: 'Resolve' , text: 'Resolve' },
-                                 { value: 'Integrate', text: 'Integrate' },
-                                 { value: 'Close' , text: 'Close' }], { value: issue.progress }) %>
-    <br>
-    <%- select_tag('severity', [{ value: '1', text: '1' },
-                                 { value: '2', text: '2' },
-                                 { value: '3', text: '3' },
-                                 { value: '4', text: '4' },
-                                 { value: '4', text: '5' }], { value: issue.severity }) %>
-    <br>
-    <%- select_tag('assigned', users.map(function(user) {
-            return { value: user.username, text: user.username };
-        }), { value: issue.assigned.username }) %>
-    <br>
-    <%- submit_tag('Save') %>
+    <label for='title'>Title:</label>
+    <%- text_field_tag('title', issue.title, { placeholder: 'Short explanation' }) %>
+
+    <label for='text'>Description:</label>
+    <%- text_tag('text', issue.text, { placeholder: 'Long explanation and steps to reproduce' }) %>
+
+    <div class='row'>
+        <div class='quarter-section'>
+            <label for='progress'>Progress:</label>
+            <%- select_tag('progress', [{ value: 'Open'     , text: 'Open' },
+                                        { value: 'Resolve'  , text: 'Resolve' },
+                                        { value: 'Integrate', text: 'Integrate' },
+                                        { value: 'Close'    , text: 'Close' }], { value: issue.progress }) %>
+        </div>
+
+        <div class='quarter-section'>
+            <label for='severity'>Severity:</label>
+            <%- select_tag('severity', [{ value: '1', text: '1' },
+                                        { value: '2', text: '2' },
+                                        { value: '3', text: '3' },
+                                        { value: '4', text: '4' },
+                                        { value: '4', text: '5' }], { value: issue.severity }) %>
+        </div>
+
+        <div class='quarter-section'>
+            <label for='assigned'>Assignee:</label>
+            <%- select_tag('assigned', users.map(function(user) {
+                    return { value: user.username, text: user.username };
+                }), { value: issue.assigned.username }) %>
+        </div>
+
+        <div class='quarter-section'>
+            <%- submit_tag('Save', { 'class': 'button button-block', style: "height: 43px" }) %>
+        </div>
+    </div>
 <%- form_end_tag() %>
 
-<h4><%= issue.comments.length %> comment(s)</h4>
+<h3><%= issue.comments.length %> comment(s)</h4>
+
 <% issue.comments.forEach(function(comment) { %>
-    <h5><%= comment.user.username %> commented on <%= comment.date %>:</h5>
+    <h4><%= comment.user.username %> commented on <%= moment(comment.date).format('DD.MM.YY HH:MM') %>:</h5>
     <p><%= comment.text %></p>
 <% }) %>
+
 <%- form_tag('/projects/' + project.name + '/issues/' + issue.ordinal + '/comment', { method: 'post' }) %>
-    <%- text_tag('text', '', { placeholder: 'Your text here..' }) %>
+    <%- text_tag('text', '', { placeholder: 'Your text here..', rows: 1 }) %>
     <br>
-    <%- submit_tag('Comment') %>
-</form>
+    <%- submit_tag('Comment', { 'class': 'button' }) %>
+<%- form_end_tag() %>
+
+<script type="text/javascript">
+    var areas = document.getElementsByTagName('textarea');
+
+    for (var i = 0, area = areas[i]; i < areas.length; i++) {
+        function keyPressed() {
+            area.style = 'height:' + (area.scrollHeight + 1) + 'px';
+        };
+
+        area.onkeydown = keyPressed;
+
+        keyPressed();
+    }
+</script>
 
 <% include ../_layouts/footer.html.ejs %>

@@ -11,7 +11,7 @@ controller.before('*', ensureLoggedIn('/login'));
 controller.before('*', function(next) {
     var self = this;
 
-    Project.findOne({ name: self.param('name') }).populate('issues.assigned').exec(function(err, project) {
+    Project.findOne({ name: self.param('name') }).populate('issues.assigned').populate('issues.comments.user').exec(function(err, project) {
         if (err) {
             self.error(err);
             return;
@@ -74,6 +74,7 @@ controller.create = function() {
 controller.show = function() {
     var self = this;
 
+    self.moment = require('moment');
     self.issue = self.project.issues.filter(function(i) { return i.ordinal == self.param('id'); })[0]
     self.render();
 }
