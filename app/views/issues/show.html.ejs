@@ -1,0 +1,43 @@
+<% include ../_layouts/header.html.ejs %>
+
+<div class='item-header'>
+    <h1>
+        <a href='/projects/<%= project.name %>'><%= project.title %></a>:
+        #<%= issue.ordinal %> <%= issue.title %>
+    </h1>
+</div>
+
+<form action='/projects/<%= project.name %>/issues/<%= issue.ordinal %>' method='post'>
+    #<%= issue.ordinal %>: <%- text_field_tag('title', issue.title, { placeholder: 'Title' }) %>
+    <%- text_tag('text', issue.text, { placeholder: 'Description' }) %>
+    <br>
+    <%- select_tag('progress', [{ value: 'Open' , text: 'Open' },
+                                 { value: 'Resolve' , text: 'Resolve' },
+                                 { value: 'Integrate', text: 'Integrate' },
+                                 { value: 'Close' , text: 'Close' }], { value: issue.progress }) %>
+    <br>
+    <%- select_tag('severity', [{ value: '1', text: '1' },
+                                 { value: '2', text: '2' },
+                                 { value: '3', text: '3' },
+                                 { value: '4', text: '4' },
+                                 { value: '4', text: '5' }], { value: issue.severity }) %>
+    <br>
+    <%- select_tag('assigned', users.map(function(user) {
+            return { value: user.username, text: user.username };
+        }), { value: issue.assigned.username }) %>
+    <br>
+    <%- submit_tag('Save') %>
+<%- form_end_tag() %>
+
+<h4><%= issue.comments.length %> comment(s)</h4>
+<% issue.comments.forEach(function(comment) { %>
+    <h5><%= comment.user.username %> commented on <%= comment.date %>:</h5>
+    <p><%= comment.text %></p>
+<% }) %>
+<%- form_tag('/projects/' + project.name + '/issues/' + issue.ordinal + '/comment', { method: 'post' }) %>
+    <%- text_tag('text', '', { placeholder: 'Your text here..' }) %>
+    <br>
+    <%- submit_tag('Comment') %>
+</form>
+
+<% include ../_layouts/footer.html.ejs %>

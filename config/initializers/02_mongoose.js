@@ -1,12 +1,9 @@
 var mongoose = require('mongoose');
 
 module.exports = function() {
-    switch (this.env) {
-        case 'development':
-        default:
-            mongoose.connect('mongodb://localhost:27017/issues-dev');
-            break;
-    }
+    var dbUrl = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/issues-dev';
+
+    mongoose.connect(dbUrl);
 
     // TODO: Temporary
     var schemas = {};

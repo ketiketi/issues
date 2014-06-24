@@ -7,9 +7,9 @@ var Comment = new Schema({
 });
 
 var Issue = new Schema({
-    ordinal : { type: Number, index: { unique: true, dropDubs: true, sparse: true } },
-    title : String,
-    text : String,
+    ordinal : Number,
+    title   : String,
+    text    : String,
     created : Date ,
     progress: { type: String, default: 'Open' },
     severity: { type: Number, default: 1 },
@@ -17,8 +17,12 @@ var Issue = new Schema({
     comments: [Comment]
 });
 
-module.exports = new Schema({
+var Project = new Schema({
     title : String,
-    name : { type: String, index: { unique: true, dropDubs: true } },
+    name  : { type: String, index: { unique: true, dropDubs: true } },
     issues: [Issue],
 });
+
+Project.index({ "_id": 1, "issues.ordinal": 1 }, { unique: true, dropDubs: true, sparse: true });
+
+module.exports = Project;

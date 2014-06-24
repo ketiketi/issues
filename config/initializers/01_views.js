@@ -3,4 +3,6 @@ module.exports = function() {
     this.set('view engine', 'ejs');
 
     this.engine('ejs', require('ejs').__express);
+
+    require('../../lib/helpers')(this);
 }

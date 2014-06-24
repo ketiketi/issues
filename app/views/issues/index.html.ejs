@@ -11,7 +11,7 @@
             <th class='item-compact'>Comments</th>
             <th class='item-compact'>Progress</th>
             <th class='item-compact'>Severity</th>
-            <th class='item-compact'>Created</th>
+            <th class='item-compact'></th>
         </tr>
     </thead>
 
@@ -23,7 +23,7 @@
                     <%= issue.ordinal %>
 
                 <td>
-                    <a href='/project/<%= project.name%>/<%= issue.ordinal %>'>
+                    <a href='/projects/<%= project.name%>/<%= issue.ordinal %>'>
                         <%= issue.title %>
                     </a>
                 </td>
@@ -44,7 +44,15 @@
                 </td>
 
                 <td class='item-compact'>
-                    <%= moment(issue.created).format('DD.MM.YY hh:mm') %>
+                    <a href='/projects/<%= project.name %>/<%= issue.ordinal %>'>
+                        Edit
+                    </a>
+                </td>
+
+                <td class='item-compact'>
+                    <a href='/projects/<%= project.name %>/<%= issue.ordinal %>/delete' onclick="return window.confirm('Are you sure?')">
+                        Delete
+                    </a>
                 </td>
             </tr>
         <% }) %>

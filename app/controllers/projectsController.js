@@ -39,4 +39,24 @@ controller.create = function() {
     });
 };
 
+controller.delete = function() {
+    var self = this;
+
+    Project.findOne({ name: self.param('name')}, function(err, project) {
+        if (err) {
+            self.error(err);
+            return;
+        }
+
+        project.remove(function(err) {
+            if (err) {
+                self.error(err);
+                return;
+            }
+
+            self.redirect('/projects');
+        });
+    });
+};
+
 module.exports = controller;

@@ -1,6 +1,8 @@
-var Controller     = require('locomotive').Controller,
-    Project        = require('mongoose').model('Project'),
-    ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn;
+var mongoose       = require('mongoose'),
+    ensureLoggedIn = require('connect-ensure-login').ensureLoggedIn,
+    Controller     = require('locomotive').Controller,
+    Project        = mongoose.model('Project'),
+    User           = mongoose.model('User');
 
 var controller = new Controller();
 
@@ -9,7 +11,7 @@ controller.before('*', ensureLoggedIn('/login'));
 controller.before('*', function(next) {
     var self = this;
 
-    Project.findOne({ name: this.param('name') }).populate('issues.assigned').exec(function(err, project) {
+    Project.findOne({ name: self.param('name') }).populate('issues.assigned').exec(function(err, project) {
         if (err) {
             self.error(err);
             return;
@@ -19,6 +21,20 @@ controller.before('*', function(next) {
 
         self.title   = project.title;
         self.project = project;
+        next();
+    });
+});
+
+controller.before('show', function(next) {
+    var self = this;
+
+    User.find({}, function(err, users) {
+        if (err) {
+            self.error(err);
+            return;
+        }
+
+        self.users = users;
         next();
     });
 });
@@ -51,8 +67,36 @@ controller.create = function() {
             return;
         }
 
-        self.redirect('/projects/' + self.param('name') + '/' + ordinal + '/edit');
+        self.redirect('/projects/' + self.param('name') + '/' + (ordinal + 1) + '/edit');
     });
 };
+
+controller.show = function() {
+    var self = this;
+
+    self.issue = self.project.issues.filter(function(i) { return i.ordinal == self.param('id'); })[0]
+    self.render();
+}
+
+controller.edit = function() {
+    var self = this;
+
+    self.redirect('/projects/' + this.param('name') + '/' + this.param('id'));
+}
+
+controller.delete = function() {
+    var self = this;
+
+    self.project.issues.filter(function(i) { return i.ordinal == self.param('id'); })[0].remove();
+
+    self.project.save(function (err) {
+        if (err) {
+            self.error(err);
+            return;
+        }
+
+        self.redirect('/projects/' + self.param('name'));
+    });
+}
 
 module.exports = controller;

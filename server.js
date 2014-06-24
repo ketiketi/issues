@@ -9,7 +9,7 @@ app.phase(locomotive.boot.views());
 app.phase(require('bootable-environment')(__dirname + '/config/environments'));
 app.phase(bootable.initializers(__dirname + '/config/initializers'));
 app.phase(locomotive.boot.routes(__dirname + '/config/routes'));
-app.phase(locomotive.boot.httpServer(3000, '0.0.0.0'));
+app.phase(locomotive.boot.httpServer(process.env.PORT || 3000, process.env.IP || '0.0.0.0'));
 
 app.boot(function(err) {
     if (err) {

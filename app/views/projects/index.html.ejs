@@ -8,7 +8,6 @@
             <th>Name</th>
             <th class='item-compact'>Issues</th>
             <th class='item-compact'></th>
-            <th class='item-compact'></th>
         </tr>
     </thead>
 
@@ -16,23 +15,22 @@
         <% projects.forEach(function(project) { %>
             <tr class='item-row'>
                 <td>
-                    <a href='/projects/<%= projects[i].name %>'>
+                    <a href='/projects/<%= project.name %>'>
                         <%= project.title %>
                     </a>
                 </td>
 
                 <td class='item-compact'>
-                    <%= project.issues.length %>
+                    <%= (project.issues || []).length %>
                 </td>
 
                 <td class='item-compact'>
-                    <a href='/projects/<%= project.name %>/edit'>Edit</a>
-                </td>
-                <td class='item-compact'>
-                    <a href='/projects/<%= project.name %>/delete'>Delete</a>
+                    <a href='/projects/<%= project.name %>/delete' onclick="return window.confirm('Are you sure?')">
+                        Delete
+                    </a>
                 </td>
             </tr>
-        <% } %>
+        <% }) %>
     </tbody>
 </table>
 
